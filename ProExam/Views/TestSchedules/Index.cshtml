@@ -1,0 +1,121 @@
+﻿@model IEnumerable<ProExam.Models.TestSchedule>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .dashboard-caption {
+        margin: 30px 0;
+        text-align: center;
+        font-size: 40px;
+        font-weight: bold;
+    }
+
+    .btn-add {
+        display: flex;
+        justify-content: end;
+    }
+
+    .container-table {
+        padding: 0 120px;
+        text-align: center
+    }
+
+    .table-wrapper {
+        width: 1400px; /* Đặt kích thước cố định cho bảng */
+        margin: auto;
+        overflow-x: auto; /* Thêm thuộc tính cuộn ngang cho bảng */
+    }
+
+    table {
+        width: 1400px; /* Đặt kích thước cố định cho bảng */
+        background-color: white;
+        border-collapse: collapse;
+        table-layout: fixed; /* Đặt bố cục cố định cho bảng */
+    }
+
+    table, th, td {
+        border: none;
+        border-bottom: 2px solid #d5d5d5;
+    }
+
+    th, td {
+        padding: 10px 20px;
+        font-size: 16px;
+        overflow: hidden;
+    }
+
+    .crud-btn {
+        display: inline-block;
+        width: 40px;
+        height: 40px;
+        border-radius: 100%;
+    }
+
+        .crud-btn i {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+        }
+
+    .crud-btn_create {
+        border-radius: 12px;
+        margin-bottom: 20px;
+        padding: 10px;
+    }
+</style>
+
+<h1 class="dashboard-caption">Quản lý lịch thi </h1>
+
+
+<div class="container-table">
+    <div class="btn-add">
+        @Html.ActionLink("Thêm lịch thi mới", "Create", "TestSchedules", new { @class = "crud-btn_create btn-success" })
+    </div>
+    <div class="table-wrapper">
+        <table border="1">
+            <thead style="border-bottom: 3px solid #d5d5d5 ">
+                <tr>
+                    <th>Mã lịch thi</th>
+                    <th>Mã môn thi</th>
+                    <th>Ngày thi</th>
+                    <th>Thời gian</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TestSchedule_ID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Subject_ID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Testing_Date)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Begining_Time)
+                    </td>
+                    <td class="action-column">
+                        <a href="@Url.Action("Edit","TestSchedules", new { id=item.TestSchedule_ID })" class="crud-btn btn-info">
+                            <i class="fa-solid fa-pen-to-square">
+                            </i>
+                        </a>
+                        <a href="@Url.Action("Delete","TestSchedules", new { id=item.TestSchedule_ID })" class="crud-btn btn-danger">
+                            <i class="fa-solid fa-x">
+                            </i>
+                        </a>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

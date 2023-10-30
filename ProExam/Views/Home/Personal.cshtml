@@ -1,0 +1,118 @@
+﻿@model IEnumerable<ProExam.Models.Student>
+
+@{
+    ViewBag.Title = "Personal";
+    Layout = "~/Views/Shared/_mainLayout.cshtml";
+}
+<style>
+    .personal-info_container {
+        width: 800px;
+        height: 520px;
+        margin: auto;
+        padding: 40px;
+        border: 2px solid var(--bs-dark);
+        border-radius: 8px;
+    }
+
+    .personal-info_item {
+        margin: 12px 0px;
+        font-size: 20px;
+    }
+
+        .personal-info_item a {
+            display:block;
+            width: 100%;
+            background: var(--bs-primary);
+            border: none;
+            padding: 5px 0px;
+            margin-top: 20px;
+            border-radius: 6px;
+            text-align: center;
+            color: white;
+        }
+
+        .personal-info_item a:hover {
+            opacity: 0.9;
+        }
+</style>
+
+<!-- Page Header End -->
+<div class="container-xxl py-5 page-header position-relative mb-5">
+    <div class="container py-5">
+        <h1 class="display-2 text-white animated slideInDown mb-4">Personal Information</h1>
+        <nav aria-label="breadcrumb animated slideInDown">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="@Url.Action("Home","Home")">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Pages</a></li>
+                <li class="breadcrumb-item text-white active" aria-current="page">Personal Information</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+<!-- Page Header End -->
+<div class="personal-info_container">
+    <h2 style="text-align: center;margin-bottom: 40px">Thông tin cá nhân</h2>
+    <div style=" display: flex; ">
+        @foreach (var item in Model)
+        {
+            <div class="personal-info_item" style="width: 30%; font-size: 14px">
+                <img src="" alt="" width="150" height="200" />
+                <br />
+            </div>
+            <div>
+                <div class="personal-info_item">
+                    <label>Họ tên: </label>
+                    <span>
+                        @Html.DisplayFor(modelItem => item.Stu_LastName)  @Html.DisplayFor(modelItem => item.Stu_FirstName)
+                    </span>
+                </div>
+
+                <div class="personal-info_item">
+                    <label>Mã học sinh: </label>
+                    <span>
+                        @Html.DisplayFor(modelItem => item.StudentCode)
+                    </span>
+                </div>
+
+                <div class="personal-info_item">
+                    <label>Ngày sinh: </label>
+                    <span>
+                        @Html.DisplayFor(modelItem => item.Stu_DOB)
+                    </span>
+                </div>
+
+                <div class="personal-info_item">
+                    <label>Giới tính: </label>
+                    <span>
+                        @Html.DisplayFor(modelItem => item.Stu_Gender)
+                    </span>
+                </div>
+
+                <div class="personal-info_item">
+                    <label>Email: </label>
+                    <span>
+                        @Html.DisplayFor(modelItem => item.Stu_Email)
+                    </span>
+                </div>
+
+                <div class="personal-info_item">
+                    <label>Số điện thoại: </label>
+                    <span>
+                        @Html.DisplayFor(modelItem => item.Stu_PhoneNumber)
+                    </span>
+                </div>
+
+                <div class="personal-info_item">
+                    <label>Địa chỉ: </label>
+                    <span>
+                        @Html.DisplayFor(modelItem => item.Stu_Address)
+                    </span>
+                </div>
+                <div class="personal-info_item">
+                    <a href="@Url.Action("PersonalInfoEdit", "Home", new { id=item.StudentCode })">Sửa thông tin cá nhân</a>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+

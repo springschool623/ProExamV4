@@ -1,0 +1,141 @@
+﻿@model IEnumerable<ProExam.Models.Teacher>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .dashboard-caption {
+        margin: 30px 0;
+        text-align: center;
+        font-size: 40px;
+        font-weight: bold;
+    }
+
+    .btn-add {
+        display: flex;
+        justify-content: end;
+    }
+
+    .container-table {
+        padding: 0 120px;
+        text-align: center
+    }
+
+    .table-wrapper {
+        width: 1400px; /* Đặt kích thước cố định cho bảng */
+        margin: auto;
+        overflow-x: auto; /* Thêm thuộc tính cuộn ngang cho bảng */
+    }
+
+    table {
+        width: 1400px; /* Đặt kích thước cố định cho bảng */
+        background-color: white;
+        border-collapse: collapse;
+        table-layout: fixed; /* Đặt bố cục cố định cho bảng */
+    }
+
+    table, th, td {
+        border: none;
+        border-bottom: 2px solid #d5d5d5;
+    }
+
+    th, td {
+        padding: 10px 20px;
+        font-size: 16px;
+        overflow: hidden;
+    }
+
+    .crud-btn {
+        display: inline-block;
+        width: 40px;
+        height: 40px;
+        border-radius: 100%;
+    }
+
+        .crud-btn i {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+        }
+
+    .crud-btn_create {
+        border-radius: 12px;
+        margin-bottom: 20px;
+        padding: 10px;
+    }
+</style>
+
+<h1 class="dashboard-caption">Quản lý thông tin giáo viên </h1>
+
+
+<div class="container-table">
+    <div class="btn-add">
+        @Html.ActionLink("Thêm giáo viên mới", "Create", "Teachers", new { @class = "crud-btn_create btn-success" })
+    </div>
+    <div class="table-wrapper">
+        <table border="1">
+            <thead style="border-bottom: 3px solid #d5d5d5 ">
+                <tr>
+                    <th>Mã giáo viên</th>
+                    <th>Họ giáo viên</th>
+                    <th>Tên giáo viên</th>
+                    <th>Ngày sinh</th>
+                    <th>Giới tính</th>
+                    <th>Email</th>
+                    <th>Số điện thoại</th>
+                    <th>Địa chỉ</th>
+                    <th>Mật khẩu</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TeacherCode)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Tea_FirstName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Tea_LastName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Tea_DOB)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Tea_Gender)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Tea_Email)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Tea_PhoneNumber)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Tea_Address)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Tea_Password)
+                        </td>
+                        <td class="action-column">
+                            <a href="@Url.Action("Edit","Teachers", new { id=item.TeacherCode })" class="crud-btn btn-info">
+                                <i class="fa-solid fa-pen-to-square">
+                                </i>
+                            </a>
+                            <a href="@Url.Action("Delete","Teachers", new { id=item.TeacherCode })" class="crud-btn btn-danger">
+                                <i class="fa-solid fa-x">
+                                </i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

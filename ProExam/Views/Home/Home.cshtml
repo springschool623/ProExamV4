@@ -1,0 +1,135 @@
+﻿@model IEnumerable<ProExam.Models.Subject>
+
+@{
+    ViewBag.Title = "Home";
+    Layout = "~/Views/Shared/_mainLayout.cshtml";
+}
+
+<style>
+    .btn-enroll {
+        width: 100%;
+        background: var(--bs-primary);
+        border: none;
+        padding: 5px 0px;
+        margin-top: 20px;
+        border-radius: 6px;
+        color: white;
+    }
+
+        .btn-enroll:hover {
+            opacity: 0.9;
+        }
+</style>
+
+<!-- Carousel Start -->
+<div class="container-fluid p-0 mb-5">
+    <div class="owl-carousel header-carousel position-relative">
+        <div class="owl-carousel-item position-relative">
+            <img class="img-fluid" src="~/Content/mainLayout/img/carousel-1.jpg" alt="">
+            <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center" style="background: rgba(0, 0, 0, .2);">
+                <div class="container">
+                    <div class="row justify-content-start">
+                        <div class="col-10 col-lg-8">
+                            <h1 class="display-2 text-white animated slideInDown mb-4">The Best Kindergarten School For Your Child</h1>
+                            <p class="fs-5 fw-medium text-white mb-4 pb-2">Vero elitr justo clita lorem. Ipsum dolor at sed stet sit diam no. Kasd rebum ipsum et diam justo clita et kasd rebum sea elitr.</p>
+                            <a href="" class="btn btn-primary rounded-pill py-sm-3 px-sm-5 me-3 animated slideInLeft">Learn More</a>
+                            <a href="" class="btn btn-dark rounded-pill py-sm-3 px-sm-5 animated slideInRight">Our Classes</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="owl-carousel-item position-relative">
+            <img class="img-fluid" src="~/Content/mainLayout/img/carousel-2.jpg" alt="">
+            <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center" style="background: rgba(0, 0, 0, .2);">
+                <div class="container">
+                    <div class="row justify-content-start">
+                        <div class="col-10 col-lg-8">
+                            <h1 class="display-2 text-white animated slideInDown mb-4">Make A Brighter Future For Your Child</h1>
+                            <p class="fs-5 fw-medium text-white mb-4 pb-2">Vero elitr justo clita lorem. Ipsum dolor at sed stet sit diam no. Kasd rebum ipsum et diam justo clita et kasd rebum sea elitr.</p>
+                            <a href="" class="btn btn-primary rounded-pill py-sm-3 px-sm-5 me-3 animated slideInLeft">Learn More</a>
+                            <a href="" class="btn btn-dark rounded-pill py-sm-3 px-sm-5 animated slideInRight">Our Classes</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Carousel End -->
+<!-- Classes Start -->
+@using (Html.BeginForm("Enroll", "Home", FormMethod.Post, new { id = "enrollForm" }))
+{
+    <div class="container-xxl py-5">
+        <div class="container">
+            <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
+                <h1 class="mb-3">Subjects</h1>
+                <p>Eirmod sed ipsum dolor sit rebum labore magna erat. Tempor ut dolore lorem kasd vero ipsum sit eirmod sit. Ipsum diam justo sed rebum vero dolor duo.</p>
+            </div>
+            <div class="row g-4">
+                @foreach (var item in Model)
+                {
+                    if (Session["UserSubjects"] != null)
+                    {
+                        var userSubjects = (List<string>)Session["UserSubjects"];
+                        // Kiểm tra xem Subject_ID của môn học có trong danh sách của sinh viên không
+                        if (!userSubjects.Contains(item.Subject_ID))
+                        {
+                            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+
+                                <div class="classes-item">
+
+                                    <div class="bg-light rounded-circle w-75 mx-auto p-3">
+                                        <img class="img-fluid rounded-circle" src="img/classes-1.jpg" alt="">
+                                    </div>
+                                    <div class="bg-light rounded p-4 pt-5 mt-n5">
+                                        <a class="d-block text-center h3 mt-3 mb-4" href="">
+                                            @Html.DisplayFor(modelItem => item.Subject_Name) - @Html.DisplayFor(modelItem => item.Subject_ID)
+                                        </a>
+
+                                        <div class="d-flex align-items-center justify-content-between mb-4">
+                                            <div class="d-flex align-items-center">
+                                                <img class="rounded-circle flex-shrink-0" src="img/user.jpg" alt="" style="width: 45px; height: 45px;">
+                                                <div class="ms-3">
+                                                    <h6 class="text-primary mb-1"> </h6>
+                                                    <small>Teacher</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row g-1">
+                                            <div class="col-4">
+                                                <div class="border-top border-3 border-primary pt-2">
+                                                    <h6 class="text-primary mb-1">Age:</h6>
+                                                    <small>3-5 Years</small>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="border-top border-3 border-success pt-2">
+                                                    <h6 class="text-success mb-1">Time:</h6>
+                                                    <small>9-10 AM</small>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="border-top border-3 border-warning pt-2">
+                                                    <h6 class="text-warning mb-1">Capacity:</h6>
+                                                    <small>40 Students</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row g-1">
+                                            <button type="submit" class="btn-enroll" name="subjectId" value="@item.Subject_ID">Enroll</button>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        }
+                    }
+                }
+            </div>
+
+        </div>
+    </div>
+}
+<!-- Classes End -->

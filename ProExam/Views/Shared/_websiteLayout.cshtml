@@ -1,0 +1,69 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="~/Content/dist/css/style.css" rel="stylesheet" />
+    <title>Document</title>
+</head>
+<body>
+
+    @{
+        string sessionUserCode = Session["UserCode"] as string;
+    }
+
+    <div class="wrapper">
+        <div class="pop-up">
+            <div class="container popup-container">
+                @Html.Partial("LoginSection")
+
+            </div>
+        </div>
+        <header>
+            <div class="container header-container">
+                <a href="">
+                    <img src="~/Content/dist/img/PEHomeLogo.png" />
+                </a>
+                @if (sessionUserCode.IsEmpty())
+                {
+                    <div class="login-section">
+                        <a class="btn-login stu-login" onclick="hienPopup()">
+                            Đăng nhập
+                        </a>
+                    </div>
+                }
+                else
+                {
+                    <h1>Out</h1>
+
+                    <div class="login-section">
+                        <h1>@sessionUserCode</h1>
+                        <a href="@Url.Action("Logout", "Home")" class="btn btn-login stu-login">
+                            Đăng xuất
+                        </a>
+                    </div>
+                }
+            </div>
+        </header>
+        <main>
+            @RenderBody()
+            <div class="container main-container">
+                <img src="https://www.dailyscandinavian.com/wp-content/uploads/2020/03/080420-education-in-sweden-unesco.jpg"
+                     alt="" />
+            </div>
+        </main>
+        <footer>
+            <div class="container footer-container"></div>
+        </footer>
+    </div>
+    <script>
+        function hienPopup() {
+            var popup = document.querySelector('.pop-up')
+            popup.style.display = 'block'
+        }
+    </script>
+    <script src="https://kit.fontawesome.com/f7f8647fe8.js"
+            crossorigin="anonymous"></script>
+
+</body>
+</html>

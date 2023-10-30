@@ -1,0 +1,130 @@
+﻿body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+}
+
+.container {
+    margin: 0 20px;
+}
+
+.wrapper {
+    position: relative;
+}
+
+.pop-up {
+    display: none;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.popup-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+form {
+    width: 700px;
+    height: 600px;
+    border-radius: 25px;
+    background-color: white;
+}
+
+    form i {
+        color: white;
+        font-size: 30px;
+    }
+
+    form .btn-close_popup {
+        cursor: pointer;
+        background-color: rgba(0, 0, 0, 0);
+        border: none;
+        padding: 20px;
+    }
+
+    form h1 {
+        margin: 0;
+        text-align: center;
+    }
+
+    form h4 {
+        font-size: 20px;
+    }
+
+    form input {
+        width: 500px;
+        padding: 12px;
+        font-size: 16px;
+        border: none;
+        outline: none;
+        background-color: whitesmoke;
+    }
+
+.form-section button {
+    margin: 25px 0;
+    border: none;
+    color: white;
+    background-color: #252525;
+}
+
+.form-label {
+    width: 100%;
+    height: 120px;
+    background-color: black;
+    color: white;
+    border-radius: 25px 25px 0 0;
+}
+
+.input-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+header {
+    margin-bottom: 40px;
+    border-bottom: 2px solid #252525;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.login-section {
+    display: flex;
+    margin: 10px 0;
+}
+
+.btn-login {
+    cursor: pointer;
+    padding: 15px;
+    margin: auto 60px;
+    border-radius: 10px;
+    font-size: 20px;
+}
+
+main {
+    margin-bottom: 40px;
+}
+
+.main-container {
+    margin: 0;
+}
+
+main img {
+    width: 100%;
+}
+
+footer {
+    width: 100%;
+    height: 220px;
+    background-color: black;
+}
