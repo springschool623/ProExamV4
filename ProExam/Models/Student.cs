@@ -21,22 +21,68 @@ namespace ProExam.Models
         {
             this.Subjects_Student = new HashSet<Subjects_Student>();
         }
-    
+
+        [Required(ErrorMessage = "Student Code is required.")]
+        [RegularExpression(@"^\d{2}DH\d{6}$", ErrorMessage = "Student Code must be in the format XXDHXXXXXX.")]
         public string StudentCode { get; set; }
+
+        [Required(ErrorMessage = "First Name is required.")]
         public string Stu_FirstName { get; set; }
+
+        [Required(ErrorMessage = "Last Name is required.")]
         public string Stu_LastName { get; set; }
 
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [Display(Name = "Date of Birth")]
+        [MinimumAge(18, ErrorMessage = "Must be at least 18 years old.")]
         public Nullable<DateTime> Stu_DOB { get; set; }
 
+        [Required(ErrorMessage = "Gender is required.")]
         public string Stu_Gender { get; set; }
+
+        [Required(ErrorMessage = "Email is required.")]
+        [RegularExpression(@"^([a-z0-9_\-\.]+)@([a-z0-9_\-\.]+)\.([a-z]{2,})$", ErrorMessage = "Invalid email format.")]
         public string Stu_Email { get; set; }
+
+        [Required(ErrorMessage = "Phone Number is required.")]
+        [Phone(ErrorMessage = "Invalid Phone Number.")]
         public string Stu_PhoneNumber { get; set; }
+
+        [Required(ErrorMessage = "Address is required.")]
         public string Stu_Address { get; set; }
+
+        [Required(ErrorMessage = "Password is required.")]
+        [RegularExpression(@"^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$", ErrorMessage = "Password must be 8-16 characters long and include at least one uppercase letter, one digit, and one special character.")]
         public string Stu_Password { get; set; }
-    
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Subjects_Student> Subjects_Student { get; set; }
+    }
+
+    public class MinimumAgeAttribute : ValidationAttribute
+    {
+        private readonly int _minimumAge;
+
+        public MinimumAgeAttribute(int minimumAge)
+        {
+            _minimumAge = minimumAge;
+        }
+
+        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+        {
+            if (value is DateTime birthdate)
+            {
+                int currentYear = DateTime.Now.Year;
+                int birthYear = birthdate.Year;
+
+                if (currentYear - birthYear < _minimumAge)
+                {
+                    return new ValidationResult($"Must be at least {_minimumAge} years old.");
+                }
+            }
+
+            return ValidationResult.Success;
+        }
     }
 }

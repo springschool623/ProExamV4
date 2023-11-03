@@ -35,18 +35,18 @@ namespace ProExam.Controllers
             return View(subject);
         }
 
-        // GET: Subjects/Create
+        // GET: Subjects1/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Subjects/Create
+        // POST: Subjects1/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Subject_ID,Subject_Name,QuestionQuantity,Testing_Time,Subject_Description,Stu_Quantity")] Subject subject)
+        public ActionResult Create([Bind(Include = "Subject_ID,Subject_Name,QuestionQuantity,Testing_Time,Subject_Description,Stu_Quantity,Sub_Max_Quantity")] Subject subject)
         {
             if (ModelState.IsValid)
             {
@@ -58,7 +58,7 @@ namespace ProExam.Controllers
             return View(subject);
         }
 
-        // GET: Subjects/Edit/5
+        // GET: Subjects1/Edit/5
         public ActionResult Edit(string id)
         {
             if (id == null)
@@ -73,12 +73,12 @@ namespace ProExam.Controllers
             return View(subject);
         }
 
-        // POST: Subjects/Edit/5
+        // POST: Subjects1/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Subject_ID,Subject_Name,QuestionQuantity,Testing_Time,Subject_Description,Stu_Quantity")] Subject subject)
+        public ActionResult Edit([Bind(Include = "Subject_ID,Subject_Name,QuestionQuantity,Testing_Time,Subject_Description,Stu_Quantity,Sub_Max_Quantity")] Subject subject)
         {
             if (ModelState.IsValid)
             {
@@ -89,7 +89,7 @@ namespace ProExam.Controllers
             return View(subject);
         }
 
-        // GET: Subjects/Delete/5
+        // GET: Subjects1/Delete/5
         public ActionResult Delete(string id)
         {
             if (id == null)
@@ -104,7 +104,7 @@ namespace ProExam.Controllers
             return View(subject);
         }
 
-        // POST: Subjects/Delete/5
+        // POST: Subjects1/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)

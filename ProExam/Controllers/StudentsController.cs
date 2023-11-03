@@ -48,6 +48,12 @@ namespace ProExam.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "StudentCode,Stu_FirstName,Stu_LastName,Stu_DOB,Stu_Gender,Stu_Email,Stu_PhoneNumber,Stu_Address,Stu_Password")] Student student)
         {
+            // Kiểm tra xem StudentCode đã tồn tại hay chưa
+            if (db.Students.Any(s => s.StudentCode == student.StudentCode))
+            {
+                ModelState.AddModelError("StudentCode", "StudentCode already exists. Please choose a different StudentCode.");
+            }
+
             if (ModelState.IsValid)
             {
                 db.Students.Add(student);
@@ -110,6 +116,13 @@ namespace ProExam.Controllers
         public ActionResult DeleteConfirmed(string id)
         {
             Student student = db.Students.Find(id);
+            var subject_stu_ids = db.Subjects_Student.Where(s => s.StudentCode == id);
+
+            foreach (var subject_stu_id in subject_stu_ids)
+            {
+                db.Subjects_Student.Remove(subject_stu_id);
+            }
+
             db.Students.Remove(student);
             db.SaveChanges();
             return RedirectToAction("Index");

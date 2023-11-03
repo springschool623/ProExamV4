@@ -11,7 +11,8 @@ namespace ProExam.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Subject
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -27,7 +28,9 @@ namespace ProExam.Models
         public Nullable<int> QuestionQuantity { get; set; }
         public Nullable<int> Testing_Time { get; set; }
         public string Subject_Description { get; set; }
+        [StuQuantityLessThanOrEqualToMax(ErrorMessage = "Student Quantity must not exceed Subject Maximum Quantity.")]
         public Nullable<int> Stu_Quantity { get; set; }
+        public Nullable<int> Sub_Max_Quantity { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TestSchedule> TestSchedules { get; set; }
@@ -36,4 +39,21 @@ namespace ProExam.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Subjects_Student> Subjects_Student { get; set; }
     }
+
+    public class StuQuantityLessThanOrEqualToMaxAttribute : ValidationAttribute
+    {
+        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+        {
+            var stuQuantity = (int?)value;
+            var subMaxQuantity = (int?)validationContext.ObjectInstance.GetType().GetProperty("Sub_Max_Quantity")?.GetValue(validationContext.ObjectInstance, null);
+
+            if (stuQuantity.HasValue && subMaxQuantity.HasValue && stuQuantity.Value > subMaxQuantity.Value)
+            {
+                return new ValidationResult("Student Quantity must not exceed Subject Maximum Quantity.");
+            }
+
+            return ValidationResult.Success;
+        }
+    }
 }
+

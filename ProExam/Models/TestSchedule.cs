@@ -17,7 +17,6 @@ namespace ProExam.Models
     {
         public int TestSchedule_ID { get; set; }
         public string Subject_ID { get; set; }
-
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public System.DateTime Testing_Date { get; set; }

@@ -44,6 +44,7 @@
         padding: 10px 20px;
         font-size: 16px;
         overflow: hidden;
+        word-wrap: break-word;
     }
 
     .crud-btn {
@@ -106,7 +107,7 @@
                             @Html.DisplayFor(modelItem => item.Subject.Subject_Name)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Testing_Date)
+                            @((item.Testing_Date != null) ? ((DateTime)item.Testing_Date).ToString("dd/MM/yyyy") : "")
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Begining_Time)

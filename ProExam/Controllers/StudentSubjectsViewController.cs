@@ -39,9 +39,10 @@ namespace ProExam.Controllers
                 }
                 else
                 {
-                    // Nếu giáo viên không tồn tại, chuyển hướng về trang chủ hoặc trang thông báo
-                    // Chuyển hướng về trang chủ
-                    return RedirectToAction("US_Subject", "Home");
+                    // Lưu mã giáo viên vào ViewBag để sử dụng trong View
+                    ViewBag.TeacherName = "Chưa có";
+
+                    return View(selectedSubject);
                 }
             }
 

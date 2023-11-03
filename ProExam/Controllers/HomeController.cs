@@ -49,36 +49,49 @@ namespace ProExam.Controllers
             // Get the user code from the session variable
             string userCode = Session["UserCode"] as string;
 
-            // If the user code is null, redirect to the login page
-            if (userCode == null)
-            {
-                return View(db.TestSchedules.ToList());
-            }
             // Use the user code to retrieve the user's information from the database
             var users = db.Students.Where(u => u.StudentCode == userCode).ToList();
 
             return View(users);
         }
 
-        public ActionResult TestSchedulesView()
+        public ActionResult TestSchedulesView(string subjectId)
         {
             // Get the user code from the session variable
             string userCode = Session["UserCode"] as string;
 
-            // If the user code is null, redirect to the login page
             if (userCode == null)
             {
                 return View(db.TestSchedules.ToList());
             }
+            else
+            {
+                if (subjectId == null)
+                {
+                    // Get the subjects for the current user
+                    var subjects = db.Subjects_Student.Where(s => s.StudentCode == userCode).Select(s => s.Subject_ID);
 
-            // Get the subjects for the current user
-            var subjects = db.Subjects_Student.Where(s => s.StudentCode == userCode).Select(s => s.Subject_ID);
+                    // Get the test schedules for the subjects that the user has registered for
+                    var testSchedules = db.TestSchedules.Where(ts => subjects.Contains(ts.Subject_ID)).ToList();
 
-            // Get the test schedules for the subjects that the user has registered for
-            var testSchedules = db.TestSchedules.Where(ts => subjects.Contains(ts.Subject_ID)).ToList();
+                    // Pass the testSchedules to the view
+                    return View(testSchedules);
+                }
 
-            // Pass the testSchedules to the view
-            return View(testSchedules);
+                // Lọc danh sách môn học chỉ hiển thị môn có ID được chọn
+                var selectedSubject = db.Subjects.SingleOrDefault(s => s.Subject_ID == subjectId);
+
+                if (selectedSubject != null)
+                {
+                    // Get the test schedules for the selected subject
+                    var testSchedules = db.TestSchedules.Where(ts => ts.Subject_ID == subjectId).ToList();
+
+                    // Pass the testSchedules to the view
+                    return View(testSchedules);
+                }
+            }
+            return RedirectToAction("Home", "Home");
+
         }
 
         public ActionResult LoginSection()
@@ -115,26 +128,32 @@ namespace ProExam.Controllers
             {
                 if(!string.IsNullOrEmpty(subjectId))
                 {
-                    // Tìm giá trị lớn nhất hiện tại của Sub_Stu_No trong bảng
-                    int maxSubStuNo = db.Subjects_Student.Max(s => (int?)s.Subs_Stu_No) ?? 0;
+                    // Lọc danh sách môn học chỉ hiển thị môn có ID được chọn
+                    var selectedSubject = db.Subjects.SingleOrDefault(s => s.Subject_ID == subjectId);
 
-                    // Tạo đối tượng Subjects_Student với Sub_Stu_No tăng dần
-                    Subjects_Student enrollment = new Subjects_Student
+                    if (selectedSubject.Stu_Quantity != selectedSubject.Sub_Max_Quantity)
                     {
-                        Subs_Stu_No = maxSubStuNo + 1, // Tăng giá trị lớn nhất hiện tại
-                        StudentCode = sessionUserCode,
-                        Subject_ID = subjectId
-                    };
+                        // Tìm giá trị lớn nhất hiện tại của Sub_Stu_No trong bảng
+                        int maxSubStuNo = db.Subjects_Student.Max(s => (int?)s.Subs_Stu_No) ?? 0;
 
-                    // Thực hiện thêm vào cơ sở dữ liệu (sử dụng db.SaveChanges())
-                    db.Subjects_Student.Add(enrollment);
-                    db.SaveChanges();
+                        // Tạo đối tượng Subjects_Student với Sub_Stu_No tăng dần
+                        Subjects_Student enrollment = new Subjects_Student
+                        {
+                            Subs_Stu_No = maxSubStuNo + 1, // Tăng giá trị lớn nhất hiện tại
+                            StudentCode = sessionUserCode,
+                            Subject_ID = subjectId
+                        };
 
-                    // Call the CalculateStuQuantity method after saving the student
-                    DatabaseHelper dbHelper = new DatabaseHelper();
-                    dbHelper.CalculateStuQuantity();
+                        // Thực hiện thêm vào cơ sở dữ liệu (sử dụng db.SaveChanges())
+                        db.Subjects_Student.Add(enrollment);
+                        db.SaveChanges();
 
-                    return RedirectToAction("Home", "Home");
+                        // Call the CalculateStuQuantity method after saving the student
+                        DatabaseHelper dbHelper = new DatabaseHelper();
+                        dbHelper.CalculateStuQuantity();
+
+                        return RedirectToAction("Home", "Home");
+                    }
                 }
 
             }
@@ -185,10 +204,23 @@ namespace ProExam.Controllers
             var isTeacher = db.Teachers.Any(u => u.TeacherCode == loginInfo.UserCode && u.Tea_Password == loginInfo.Password);
 
 
-            if (isStudent || isTeacher)
+            if (isStudent)
             {
                 // Set the "UserCode" session variable to the user code
                 Session["UserCode"] = loginInfo.UserCode;
+
+                var student = db.Students.FirstOrDefault(u => u.StudentCode == loginInfo.UserCode);
+                Session["UserName"] =  student.Stu_LastName;
+
+                return RedirectToAction("Home", "Home");
+            }
+            else if (isTeacher)
+            {
+                // Set the "UserCode" session variable to the user code
+                Session["UserCode"] = loginInfo.UserCode;
+
+                var teacher = db.Teachers.FirstOrDefault(u => u.TeacherCode == loginInfo.UserCode);
+                Session["UserName"] =  teacher.Tea_LastName;
 
                 return RedirectToAction("Home", "Home");
             }

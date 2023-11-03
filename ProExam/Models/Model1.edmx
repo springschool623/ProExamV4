@@ -29,6 +29,7 @@
           <Property Name="Testing_Time" Type="int" />
           <Property Name="Subject_Description" Type="text" />
           <Property Name="Stu_Quantity" Type="int" />
+          <Property Name="Sub_Max_Quantity" Type="int" />
         </EntityType>
         <EntityType Name="Subjects_Student">
           <Key>
@@ -190,6 +191,7 @@
           <NavigationProperty Name="TestSchedules" Relationship="Self.fk_MaMonHoc" FromRole="Subjects" ToRole="TestSchedule" />
           <NavigationProperty Name="Subjects_Teacher" Relationship="Self.FK_SubjectID" FromRole="Subjects" ToRole="Subjects_Teacher" />
           <NavigationProperty Name="Subjects_Student" Relationship="Self.FK_SubjectID_2" FromRole="Subjects" ToRole="Subjects_Student" />
+          <Property Name="Sub_Max_Quantity" Type="Int32" />
         </EntityType>
         <EntityType Name="Subjects_Student">
           <Key>
@@ -349,6 +351,7 @@
           <EntitySetMapping Name="Subjects">
             <EntityTypeMapping TypeName="ProExamDBModel.Subject">
               <MappingFragment StoreEntitySet="Subjects">
+                <ScalarProperty Name="Sub_Max_Quantity" ColumnName="Sub_Max_Quantity" />
                 <ScalarProperty Name="Subject_ID" ColumnName="Subject_ID" />
                 <ScalarProperty Name="Subject_Name" ColumnName="Subject_Name" />
                 <ScalarProperty Name="QuestionQuantity" ColumnName="QuestionQuantity" />
