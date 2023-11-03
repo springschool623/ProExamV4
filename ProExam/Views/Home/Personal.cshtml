@@ -63,7 +63,7 @@
                 <div class="personal-info_item">
                     <label>Họ tên: </label>
                     <span>
-                        @Html.DisplayFor(modelItem => item.Stu_LastName)  @Html.DisplayFor(modelItem => item.Stu_FirstName)
+                        @Html.DisplayFor(modelItem => item.Stu_FirstName) @Html.DisplayFor(modelItem => item.Stu_LastName)
                     </span>
                 </div>
 
@@ -77,7 +77,7 @@
                 <div class="personal-info_item">
                     <label>Ngày sinh: </label>
                     <span>
-                        @Html.DisplayFor(modelItem => item.Stu_DOB)
+                        @((item.Stu_DOB != null) ? ((DateTime)item.Stu_DOB).ToString("dd/MM/yyyy") : "")
                     </span>
                 </div>
 

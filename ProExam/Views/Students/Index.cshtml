@@ -45,6 +45,8 @@
         padding: 10px 20px;
         font-size: 16px;
         overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: no-wrap;
     }
 
     .crud-btn {
@@ -106,7 +108,7 @@
                             @Html.DisplayFor(modelItem => item.Stu_LastName)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Stu_DOB)
+                            @((item.Stu_DOB != null) ? ((DateTime)item.Stu_DOB).ToString("dd-MM-yyyy") : "")
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Stu_Gender)

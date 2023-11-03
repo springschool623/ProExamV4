@@ -86,42 +86,46 @@
                     <th>Thời gian</th>
                     <th>Mô tả</th>
                     <th>Số học sinh</th>
+                    <th>Số học sinh max</th>
                     <th>Action</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model)
                 {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Subject_ID)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Subject_Name)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.QuestionQuantity)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Testing_Time) phút
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Subject_Description)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Stu_Quantity)
-                        </td>
-                        <td class="action-column">
-                            <a href="@Url.Action("Edit","Subjects", new { id=item.Subject_ID })" class="crud-btn btn-info">
-                                <i class="fa-solid fa-pen-to-square">
-                                </i>
-                            </a>
-                            <a href="@Url.Action("Delete","Subjects", new { id=item.Subject_ID })" class="crud-btn btn-danger">
-                                <i class="fa-solid fa-x">
-                                </i>
-                            </a>
-                        </td>
-                    </tr>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Subject_ID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Subject_Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.QuestionQuantity)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Testing_Time) phút
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Subject_Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Stu_Quantity)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Sub_Max_Quantity)
+                    </td>
+                    <td class="action-column">
+                        <a href="@Url.Action("Edit","Subjects", new { id=item.Subject_ID })" class="crud-btn btn-info">
+                            <i class="fa-solid fa-pen-to-square">
+                            </i>
+                        </a>
+                        <a href="@Url.Action("Delete","Subjects", new { id=item.Subject_ID })" class="crud-btn btn-danger">
+                            <i class="fa-solid fa-x">
+                            </i>
+                        </a>
+                    </td>
+                </tr>
                 }
             </tbody>
         </table>

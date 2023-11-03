@@ -5,6 +5,18 @@
     Layout = "~/Views/Shared/_mainLayout.cshtml";
 }
 
+<style>
+    table {
+        width: 800px !important;
+        margin: auto;
+        text-align: center;
+    }
+</style>
+
+@{ 
+    string sessionUserCode = Session["UserCode"] as string;
+}
+
 
 @foreach (var item in Model)
 {
@@ -23,21 +35,23 @@
     </div>
     <!-- Page Header End -->
 
+
     <table class="table">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Subject_Name)
+                Tên môn thi
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.QuestionQuantity)
+                Số câu hỏi
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Testing_Time)
+                Thời gian làm bài
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Subject_Description)
+                Chi tiết môn thi
             </th>
-            <th>@ViewBag.TeacherName</th>
+            <th>Giáo viên phụ trách</th>
+            <th></th>
         </tr>
 
         <tr>
@@ -45,19 +59,16 @@
                 @Html.DisplayFor(modelItem => item.Subject_Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.QuestionQuantity)
+                @Html.DisplayFor(modelItem => item.QuestionQuantity) câu 
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Testing_Time)
+                @Html.DisplayFor(modelItem => item.Testing_Time) phút
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Subject_Description)
             </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Subject_ID }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Subject_ID }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Subject_ID })
-            </td>
+            <td>@ViewBag.TeacherName</td>
+            <td><a href="@Url.Action("TestSchedulesView", "Home", new { subjectId = item.Subject_ID })">Kiểm tra lịch thi</a></td>
         </tr>
 
     </table>

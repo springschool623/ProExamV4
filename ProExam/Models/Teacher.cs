@@ -24,11 +24,9 @@ namespace ProExam.Models
         public string TeacherCode { get; set; }
         public string Tea_FirstName { get; set; }
         public string Tea_LastName { get; set; }
-
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public Nullable<System.DateTime> Tea_DOB { get; set; }
-
         public string Tea_Gender { get; set; }
         public string Tea_Email { get; set; }
         public string Tea_PhoneNumber { get; set; }
