@@ -5,6 +5,19 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="ProExamDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Questions">
+          <Key>
+            <PropertyRef Name="Quest_id" />
+          </Key>
+          <Property Name="Quest_id" Type="int" Nullable="false" />
+          <Property Name="Quest_content" Type="nvarchar(max)" />
+          <Property Name="Ans_a" Type="nvarchar(max)" />
+          <Property Name="Ans_b" Type="nvarchar(max)" />
+          <Property Name="Ans_c" Type="nvarchar(max)" />
+          <Property Name="Ans_d" Type="nvarchar(max)" />
+          <Property Name="correct_ans" Type="char" MaxLength="1" />
+          <Property Name="Subject_id" Type="char" MaxLength="8" />
+        </EntityType>
         <EntityType Name="Student">
           <Key>
             <PropertyRef Name="StudentCode" />
@@ -83,6 +96,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="fk_Quest">
+          <End Role="Subjects" Type="Self.Subjects" Multiplicity="0..1" />
+          <End Role="Questions" Type="Self.Questions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subjects">
+              <PropertyRef Name="Subject_ID" />
+            </Principal>
+            <Dependent Role="Questions">
+              <PropertyRef Name="Subject_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_SubjectID">
           <End Role="Subjects" Type="Self.Subjects" Multiplicity="0..1" />
           <End Role="Subjects_Teacher" Type="Self.Subjects_Teacher" Multiplicity="*" />
@@ -132,6 +157,7 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="ProExamDBModelStoreContainer">
+          <EntitySet Name="Questions" EntityType="Self.Questions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Student" EntityType="Self.Student" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Subjects" EntityType="Self.Subjects" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Subjects_Student" EntityType="Self.Subjects_Student" Schema="dbo" store:Type="Tables" />
@@ -141,6 +167,10 @@
           <AssociationSet Name="fk_MaMonHoc" Association="Self.fk_MaMonHoc">
             <End Role="Subjects" EntitySet="Subjects" />
             <End Role="TestSchedule" EntitySet="TestSchedule" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Quest" Association="Self.fk_Quest">
+            <End Role="Subjects" EntitySet="Subjects" />
+            <End Role="Questions" EntitySet="Questions" />
           </AssociationSet>
           <AssociationSet Name="FK_SubjectID" Association="Self.FK_SubjectID">
             <End Role="Subjects" EntitySet="Subjects" />
@@ -192,6 +222,7 @@
           <NavigationProperty Name="Subjects_Teacher" Relationship="Self.FK_SubjectID" FromRole="Subjects" ToRole="Subjects_Teacher" />
           <NavigationProperty Name="Subjects_Student" Relationship="Self.FK_SubjectID_2" FromRole="Subjects" ToRole="Subjects_Student" />
           <Property Name="Sub_Max_Quantity" Type="Int32" />
+          <NavigationProperty Name="Questions" Relationship="ProExamDBModel.fk_Quest" FromRole="Subject" ToRole="Question" />
         </EntityType>
         <EntityType Name="Subjects_Student">
           <Key>
@@ -326,7 +357,38 @@
             <End Role="Teacher" EntitySet="Teachers" />
             <End Role="Subjects_Teacher" EntitySet="Subjects_Teacher" />
           </AssociationSet>
+          <EntitySet Name="Questions" EntityType="ProExamDBModel.Question" />
+          <AssociationSet Name="fk_Quest" Association="ProExamDBModel.fk_Quest">
+            <End Role="Subject" EntitySet="Subjects" />
+            <End Role="Question" EntitySet="Questions" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Question">
+          <Key>
+            <PropertyRef Name="Quest_id" />
+          </Key>
+          <Property Name="Quest_id" Type="Int32" Nullable="false" />
+          <Property Name="Quest_content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Ans_a" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Ans_b" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Ans_c" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Ans_d" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="correct_ans" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="Subject_id" Type="String" MaxLength="8" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="Subject" Relationship="ProExamDBModel.fk_Quest" FromRole="Question" ToRole="Subject" />
+        </EntityType>
+        <Association Name="fk_Quest">
+          <End Type="ProExamDBModel.Subject" Role="Subject" Multiplicity="0..1" />
+          <End Type="ProExamDBModel.Question" Role="Question" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subject">
+              <PropertyRef Name="Subject_ID" />
+            </Principal>
+            <Dependent Role="Question">
+              <PropertyRef Name="Subject_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -402,6 +464,20 @@
                 <ScalarProperty Name="Subject_ID" ColumnName="Subject_ID" />
                 <ScalarProperty Name="Testing_Date" ColumnName="Testing_Date" />
                 <ScalarProperty Name="Begining_Time" ColumnName="Begining_Time" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Questions">
+            <EntityTypeMapping TypeName="ProExamDBModel.Question">
+              <MappingFragment StoreEntitySet="Questions">
+                <ScalarProperty Name="Subject_id" ColumnName="Subject_id" />
+                <ScalarProperty Name="correct_ans" ColumnName="correct_ans" />
+                <ScalarProperty Name="Ans_d" ColumnName="Ans_d" />
+                <ScalarProperty Name="Ans_c" ColumnName="Ans_c" />
+                <ScalarProperty Name="Ans_b" ColumnName="Ans_b" />
+                <ScalarProperty Name="Ans_a" ColumnName="Ans_a" />
+                <ScalarProperty Name="Quest_content" ColumnName="Quest_content" />
+                <ScalarProperty Name="Quest_id" ColumnName="Quest_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

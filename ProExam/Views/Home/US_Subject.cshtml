@@ -45,7 +45,7 @@
                                 <img class="img-fluid rounded-circle" src="img/classes-1.jpg" alt="">
                             </div>
                             <div class="bg-light rounded p-4 pt-5 mt-n5">
-                                <a class="d-block text-center h3 mt-3 mb-4" href="@Url.Action("Index", "StudentSubjectsView", new { subjectId = item.Subject.Subject_ID })">
+                                <a class="d-block text-center h3 mt-3 mb-4" href="@Url.Action("Index", "TestingView", new { subjectId = item.Subject.Subject_ID })">
                                     @Html.DisplayFor(modelItem => item.Subject.Subject_Name) - @Html.DisplayFor(modelItem => item.Subject.Subject_ID)
                                 </a>
                                 <div class="d-flex align-items-center justify-content-between mb-4">

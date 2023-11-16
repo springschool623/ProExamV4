@@ -31,5 +31,6 @@ namespace ProExam.Models
         public virtual DbSet<Subjects_Teacher> Subjects_Teacher { get; set; }
         public virtual DbSet<Teacher> Teachers { get; set; }
         public virtual DbSet<TestSchedule> TestSchedules { get; set; }
+        public virtual DbSet<Question> Questions { get; set; }
     }
 }

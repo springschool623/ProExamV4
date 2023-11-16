@@ -16,6 +16,8 @@
         <AssociationConnector Association="ProExamDBModel.FK_SubjectID" ManuallyRouted="false" />
         <AssociationConnector Association="ProExamDBModel.FK_SubjectID_2" ManuallyRouted="false" />
         <AssociationConnector Association="ProExamDBModel.FK_SubTeacherCode" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="ProExamDBModel.Question" Width="1.5" PointX="3" PointY="14.125" />
+        <AssociationConnector Association="ProExamDBModel.fk_Quest" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
