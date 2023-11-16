@@ -1,0 +1,58 @@
+﻿@model IEnumerable<ProExam.Models.Question>
+
+@{
+    ViewBag.Title = "Quiz";
+    Layout = "~/Views/Shared/_mainLayout.cshtml";
+}
+
+<style>
+    form {
+        width: 90%;
+        margin: auto;
+    }
+</style>
+
+@{
+    int count = 0;
+}
+<div class="container-xxl py-5 page-header position-relative mb-5">
+    <div class="container py-5">
+        <h1 class="display-2 text-white animated slideInDown mb-4">BÀI THI</h1>
+        <nav aria-label="breadcrumb animated slideInDown">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="@Url.Action("Home","Home")">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Pages</a></li>
+            </ol>
+        </nav>
+    </div>
+</div>
+@using (Html.BeginForm("SubmitAnswers", "TestingView", FormMethod.Post))
+{
+    foreach (var item in Model)
+    {
+        count++;
+        <fieldset style="margin: 10px 20px">
+            <h5>
+                Câu hỏi @count: @Html.DisplayFor(modelItem => item.Quest_content)
+            </h5>
+            <label>
+                <input name="ans_A" type="radio" value="A">
+                @Html.DisplayFor(modelItem => item.Ans_a)
+            </label><br>
+            <label>
+                <input name="ans_B" type="radio" value="B">
+                @Html.DisplayFor(modelItem => item.Ans_b)
+            </label><br>
+            <label>
+                <input name="ans_C" type="radio" value="C">
+                @Html.DisplayFor(modelItem => item.Ans_c)
+            </label><br>
+            <label>
+                <input name="ans_D" type="radio" value="D">
+                @Html.DisplayFor(modelItem => item.Ans_d)
+            </label><br>
+        </fieldset>
+    }
+
+    <input type="submit" value="Submit" style="margin: auto;"/>
+}

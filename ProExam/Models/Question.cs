@@ -11,17 +11,30 @@ namespace ProExam.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
-    public partial class TestSchedule
+    using System.Web.Mvc;
+    
+    public partial class Question
     {
-        public int TestSchedule_ID { get; set; }
-        public string Subject_ID { get; set; }
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public System.DateTime Testing_Date { get; set; }
-        public System.TimeSpan Begining_Time { get; set; }
+        public int Quest_id { get; set; }
 
+        [AllowHtml]
+        public string Quest_content { get; set; }
+
+        [AllowHtml]
+        public string Ans_a { get; set; }
+
+        [AllowHtml]
+        public string Ans_b { get; set; }
+
+        [AllowHtml]
+        public string Ans_c { get; set; }
+
+        [AllowHtml]
+        public string Ans_d { get; set; }
+
+        public string correct_ans { get; set; }
+        public string Subject_id { get; set; }
+    
         public virtual Subject Subject { get; set; }
     }
 }

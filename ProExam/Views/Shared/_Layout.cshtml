@@ -31,6 +31,9 @@
     <!-- summernote -->
     <link rel="stylesheet" href="~/Content/plugins/summernote/summernote-bs4.min.css" />
 
+    <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/latest/ckeditor.css">
+
+
     <style>
         .main-wrapper {
             padding: 25px;
@@ -306,33 +309,11 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-table"></i>
-                                <p>
-                                    Lịch thi
-                                    <i class="fas fa-angle-left right"></i>
-                                </p>
+                            <a href="@Url.Action("Index","Questions")" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Đề thi</p>
+                                <span class="right badge badge-danger">New</span>
                             </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="pages/tables/simple.html" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Simple Tables</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="pages/tables/data.html" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>DataTables</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="pages/tables/jsgrid.html" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>jsGrid</p>
-                                    </a>
-                                </li>
-                            </ul>
                         </li>
                     </ul>
                 </nav>
@@ -355,9 +336,9 @@
                 <a href="">ProExam.edu</a>.
             </strong>
             All rights reserved.
-           @* <div class="float-right d-none d-sm-inline-block">
-                <b>Version</b> 3.2.0
-            </div>*@
+            @* <div class="float-right d-none d-sm-inline-block">
+                    <b>Version</b> 3.2.0
+                </div>*@
         </footer>
 
         <!-- Control Sidebar -->
@@ -402,5 +383,6 @@
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script src="~/Content/dist/js/pages/dashboard.js"></script>
     <script src="https://kit.fontawesome.com/f7f8647fe8.js" crossorigin="anonymous"></script>
+
 </body>
 </html>
